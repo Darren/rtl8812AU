@@ -2102,7 +2102,7 @@ _func_enter_;
 			}
 			else
 			{			
-				DBG_871X_LEVEL(_drv_always_, "Can't find ptarget_wlan when joinbss_event callback\n");
+				DBG_871X_LEVEL(_drv_debug_, "Can't find ptarget_wlan when joinbss_event callback\n");
 				_exit_critical_bh(&(pmlmepriv->scanned_queue.lock), &irqL);
 				goto ignore_joinbss_callback;
 			}

@@ -761,7 +761,7 @@ s32 rtw_hal_macid_sleep(PADAPTER padapter, u8 macid)
 		return _FAIL;
 
 	if (macid >= macid_ctl->num) {
-		DBG_871X_LEVEL(_drv_err_, FUNC_ADPT_FMT": Invalid macid(%u)\n",
+		DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT": Invalid macid(%u)\n",
 			FUNC_ADPT_ARG(padapter), macid);
 		return _FAIL;
 	}
@@ -783,7 +783,7 @@ s32 rtw_hal_macid_wakeup(PADAPTER padapter, u8 macid)
 		return _FAIL;
 
 	if (macid >= macid_ctl->num) {
-		DBG_871X_LEVEL(_drv_err_, FUNC_ADPT_FMT": Invalid macid(%u)\n",
+		DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT": Invalid macid(%u)\n",
 			FUNC_ADPT_ARG(padapter), macid);
 		return _FAIL;
 	}

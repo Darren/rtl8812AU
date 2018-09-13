@@ -1707,7 +1707,7 @@ unsigned int OnBeacon(_adapter *padapter, union recv_frame *precv_frame)
 			if (padapter->registrypriv.wifi_spec) {
 				if (process_p2p_cross_connect_ie(padapter, (pframe + WLAN_HDR_A3_LEN), (len - WLAN_HDR_A3_LEN)) == _FALSE) {
 					if((padapter->pbuddy_adapter->mlmeextpriv.mlmext_info.state&0x03) == WIFI_FW_AP_STATE) {
-						DBG_871X_LEVEL(_drv_always_, "no issue auth, P2P cross-connect does not permit\n ");
+						DBG_871X_LEVEL(_drv_debug_, "no issue auth, P2P cross-connect does not permit\n ");
 						return _SUCCESS;
 					}
 				}
@@ -1738,7 +1738,7 @@ unsigned int OnBeacon(_adapter *padapter, union recv_frame *precv_frame)
 
 				ret = rtw_check_bcn_info(padapter, pframe, len);
 				if (!ret) {
-						DBG_871X_LEVEL(_drv_always_, "ap has changed, disconnect now\n ");
+						DBG_871X_LEVEL(_drv_debug_, "ap has changed, disconnect now\n ");
 						receive_disconnect(padapter, pmlmeinfo->network.MacAddress , 0);
 						return _SUCCESS;
 				}
@@ -2214,7 +2214,7 @@ unsigned int OnAuthClient(_adapter *padapter, union recv_frame *precv_frame)
 
 	if (go2asoc)
 	{
-		DBG_871X_LEVEL(_drv_always_, "auth success, start assoc\n");
+		DBG_871X_LEVEL(_drv_debug_, "auth success, start assoc\n");
 		start_clnt_assoc(padapter);
 		return _SUCCESS;
 	}
@@ -3062,7 +3062,7 @@ unsigned int OnDeAuth(_adapter *padapter, union recv_frame *precv_frame)
 		//rtw_free_stainfo(padapter, psta);
 		//_exit_critical_bh(&(pstapriv->sta_hash_lock), &irqL);		
 
-		DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" reason=%u, ta=%pM\n"
+		DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" reason=%u, ta=%pM\n"
 			, FUNC_ADPT_ARG(padapter), reason, GetAddr2Ptr(pframe));
 
 		psta = rtw_get_stainfo(pstapriv, GetAddr2Ptr(pframe));	
@@ -3108,7 +3108,7 @@ unsigned int OnDeAuth(_adapter *padapter, union recv_frame *precv_frame)
 			}
 		}
 
-		DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" reason=%u, ta=%pM, ignore=%d\n"
+		DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" reason=%u, ta=%pM, ignore=%d\n"
 			, FUNC_ADPT_ARG(padapter), reason, GetAddr2Ptr(pframe), ignore_received_deauth);
 
 		if ( 0 == ignore_received_deauth )
@@ -3161,7 +3161,7 @@ unsigned int OnDisassoc(_adapter *padapter, union recv_frame *precv_frame)
 		//rtw_free_stainfo(padapter, psta);
 		//_exit_critical_bh(&(pstapriv->sta_hash_lock), &irqL);		
 
-		DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" reason=%u, ta=%pM\n"
+		DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" reason=%u, ta=%pM\n"
 			, FUNC_ADPT_ARG(padapter), reason, GetAddr2Ptr(pframe));
 
 		psta = rtw_get_stainfo(pstapriv, GetAddr2Ptr(pframe));	
@@ -3187,7 +3187,7 @@ unsigned int OnDisassoc(_adapter *padapter, union recv_frame *precv_frame)
 	else
 #endif
 	{
-		DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" reason=%u, ta=%pM\n"
+		DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" reason=%u, ta=%pM\n"
 			, FUNC_ADPT_ARG(padapter), reason, GetAddr2Ptr(pframe));
 
 		receive_disconnect(padapter, GetAddr2Ptr(pframe), reason);
@@ -11041,7 +11041,7 @@ void start_clnt_auth(_adapter* padapter)
 	pmlmeext->retry = 0;
 
 
-	DBG_871X_LEVEL(_drv_always_, "start auth\n");
+	DBG_871X_LEVEL(_drv_debug_, "start auth\n");
 	issue_auth(padapter, NULL, 0);
 
 	set_link_timer(pmlmeext, REAUTH_TO);
@@ -12541,7 +12541,7 @@ void linked_status_chk(_adapter *padapter, u8 from_timer)
 			if (rx_chk == _FAIL) {
 				pmlmeext->retry++;
 				if (pmlmeext->retry > rx_chk_limit) {
-					DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" disconnect or roaming\n",
+					DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" disconnect or roaming\n",
 						FUNC_ADPT_ARG(padapter));
 					receive_disconnect(padapter, pmlmeinfo->network.MacAddress
 						, WLAN_REASON_EXPIRATION_CHK);
@@ -13509,7 +13509,7 @@ static int rtw_scan_ch_decision(_adapter *padapter, struct rtw_ieee80211_channel
 		)
 		{
 			if (j >= out_num) {
-				DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" out_num:%u not enough\n",
+				DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" out_num:%u not enough\n",
 					FUNC_ADPT_ARG(padapter), out_num);
 				break;
 			}
@@ -13535,7 +13535,7 @@ static int rtw_scan_ch_decision(_adapter *padapter, struct rtw_ieee80211_channel
 			if (rtw_mlme_band_check(padapter, pmlmeext->channel_set[i].ChannelNum) == _TRUE) {
 
 				if (j >= out_num) {
-					DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" out_num:%u not enough\n",
+					DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" out_num:%u not enough\n",
 						FUNC_ADPT_ARG(padapter), out_num);
 					break;
 				}
@@ -14314,7 +14314,7 @@ u8 setkey_hdl(_adapter *padapter, u8 *pbuf)
 	if (used == _TRUE && rtw_camid_is_gk(padapter, cam_id) == _FALSE) {
 		s16 camid_clr;
 
-		DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" group key with "MAC_FMT" id:%u the same key id as pairwise key\n"
+		DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" group key with "MAC_FMT" id:%u the same key id as pairwise key\n"
 			, FUNC_ADPT_ARG(padapter), MAC_ARG(addr), pparm->keyid);
 
 		/* HW has problem to distinguish this group key with existing pairwise key, stop HW enc and dec for BMC */
@@ -14323,7 +14323,7 @@ u8 setkey_hdl(_adapter *padapter, u8 *pbuf)
 
 		/* clear group key */
 		while ((camid_clr = rtw_camid_search(padapter, addr, -1, 1)) >= 0) {
-			DBG_871X_LEVEL(_drv_always_, "clear group key for addr:"MAC_FMT", camid:%d\n", MAC_ARG(addr), camid_clr);
+			DBG_871X_LEVEL(_drv_debug_, "clear group key for addr:"MAC_FMT", camid:%d\n", MAC_ARG(addr), camid_clr);
 			clear_cam_entry(padapter, camid_clr);
 			rtw_camid_free(padapter, camid_clr);
 		}
@@ -14333,7 +14333,7 @@ u8 setkey_hdl(_adapter *padapter, u8 *pbuf)
 	#endif
 
 	ctrl = BIT(15) | BIT6 | ((pparm->algorithm) << 2) | pparm->keyid;
-	DBG_871X_LEVEL(_drv_always_, "set group key camid:%d, addr:"MAC_FMT", kid:%d, type:%s\n"
+	DBG_871X_LEVEL(_drv_debug_, "set group key camid:%d, addr:"MAC_FMT", kid:%d, type:%s\n"
 		, cam_id, MAC_ARG(addr), pparm->keyid, security_type_str(pparm->algorithm));
 	write_cam(padapter, cam_id, ctrl, addr, pparm->key);
 
@@ -14366,7 +14366,7 @@ u8 set_stakey_hdl(_adapter *padapter, u8 *pbuf)
 
 	psta = rtw_get_stainfo(pstapriv, pparm->addr);
 	if (!psta) {
-		DBG_871X_LEVEL(_drv_always_, "%s sta:"MAC_FMT" not found\n", __func__, MAC_ARG(pparm->addr));
+		DBG_871X_LEVEL(_drv_debug_, "%s sta:"MAC_FMT" not found\n", __func__, MAC_ARG(pparm->addr));
 		ret = H2C_REJECTED;
 		goto exit;
 	}
@@ -14381,7 +14381,7 @@ u8 set_stakey_hdl(_adapter *padapter, u8 *pbuf)
 	if (used == _TRUE && rtw_camid_is_gk(padapter, cam_id) == _TRUE) {
 		s16 camid_clr;
 
-		DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" pairwise key with "MAC_FMT" id:%u the same key id as group key\n"
+		DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" pairwise key with "MAC_FMT" id:%u the same key id as group key\n"
 			, FUNC_ADPT_ARG(padapter), MAC_ARG(pparm->addr), pparm->keyid);
 
 		/* HW has problem to distinguish this pairwise key with existing group key, stop HW enc and dec for BMC */
@@ -14390,7 +14390,7 @@ u8 set_stakey_hdl(_adapter *padapter, u8 *pbuf)
 
 		/* clear group key */
 		while ((camid_clr = rtw_camid_search(padapter, pparm->addr, -1, 1)) >= 0) {
-			DBG_871X_LEVEL(_drv_always_, "clear group key for addr:"MAC_FMT", camid:%d\n", MAC_ARG(pparm->addr), camid_clr);
+			DBG_871X_LEVEL(_drv_debug_, "clear group key for addr:"MAC_FMT", camid:%d\n", MAC_ARG(pparm->addr), camid_clr);
 			clear_cam_entry(padapter, camid_clr);
 			rtw_camid_free(padapter, camid_clr);
 		}
@@ -14400,12 +14400,12 @@ u8 set_stakey_hdl(_adapter *padapter, u8 *pbuf)
 write_to_cam:
 	if(pparm->algorithm == _NO_PRIVACY_) {
 		while ((cam_id = rtw_camid_search(padapter, pparm->addr, -1, -1)) >= 0) {
-			DBG_871X_LEVEL(_drv_always_, "clear key for addr:"MAC_FMT", camid:%d\n", MAC_ARG(pparm->addr), cam_id);
+			DBG_871X_LEVEL(_drv_debug_, "clear key for addr:"MAC_FMT", camid:%d\n", MAC_ARG(pparm->addr), cam_id);
 			clear_cam_entry(padapter, cam_id);
 			rtw_camid_free(padapter,cam_id);
 		}
 	} else {
-		DBG_871X_LEVEL(_drv_always_, "set pairwise key camid:%d, addr:"MAC_FMT", kid:%d, type:%s\n",
+		DBG_871X_LEVEL(_drv_debug_, "set pairwise key camid:%d, addr:"MAC_FMT", kid:%d, type:%s\n",
 			cam_id, MAC_ARG(pparm->addr), pparm->keyid, security_type_str(pparm->algorithm));
 		ctrl = BIT(15) | ((pparm->algorithm) << 2) | pparm->keyid;
 		write_cam(padapter, cam_id, ctrl, pparm->addr, pparm->key);

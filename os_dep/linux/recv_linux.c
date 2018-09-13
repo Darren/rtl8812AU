@@ -681,7 +681,7 @@ int rtw_recv_indicatepkt(_adapter *padapter, union recv_frame *precv_frame)
 	RT_TRACE(_module_recv_osdep_c_,_drv_info_,("\n skb->head=%p skb->data=%p skb->tail=%p skb->end=%p skb->len=%d\n", skb->head, skb->data, skb_tail_pointer(skb), skb_end_pointer(skb), skb->len));
 
 	if (pattrib->eth_type == 0x888e)
-		DBG_871X_LEVEL(_drv_always_, "recv eapol packet\n");
+		DBG_871X_LEVEL(_drv_debug_, "recv eapol packet\n");
 
 #ifdef CONFIG_AUTO_AP_MODE	
 #if 1 //for testing

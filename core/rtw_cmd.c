@@ -552,12 +552,12 @@ _func_enter_;
 	while(1)
 	{
 		if (_rtw_down_sema(&pcmdpriv->cmd_queue_sema) == _FAIL) {
-			DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" _rtw_down_sema(&pcmdpriv->cmd_queue_sema) return _FAIL, break\n", FUNC_ADPT_ARG(padapter));
+			DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" _rtw_down_sema(&pcmdpriv->cmd_queue_sema) return _FAIL, break\n", FUNC_ADPT_ARG(padapter));
 			break;
 		}
 
 		if (RTW_CANNOT_RUN(padapter)) {
-			DBG_871X_LEVEL(_drv_always_, "%s: DriverStopped(%s) SurpriseRemoved(%s) break at line %d\n",
+			DBG_871X_LEVEL(_drv_debug_, "%s: DriverStopped(%s) SurpriseRemoved(%s) break at line %d\n",
 				__func__
 				, rtw_is_drv_stopped(padapter)?"True":"False"
 				, rtw_is_surprise_removed(padapter)?"True":"False"
@@ -566,7 +566,7 @@ _func_enter_;
 		}
 
 		if (pcmdpriv->stop_req) {
-			DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" stop_req:%u, break\n", FUNC_ADPT_ARG(padapter), pcmdpriv->stop_req);
+			DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" stop_req:%u, break\n", FUNC_ADPT_ARG(padapter), pcmdpriv->stop_req);
 			break;
 		}
 		
@@ -590,7 +590,7 @@ _func_enter_;
 
 _next:
 		if (RTW_CANNOT_RUN(padapter)) {
-			DBG_871X_LEVEL(_drv_always_, "%s: DriverStopped(%s) SurpriseRemoved(%s) break at line %d\n",
+			DBG_871X_LEVEL(_drv_debug_, "%s: DriverStopped(%s) SurpriseRemoved(%s) break at line %d\n",
 				__func__
 				, rtw_is_drv_stopped(padapter)?"True":"False"
 				, rtw_is_surprise_removed(padapter)?"True":"False"
@@ -650,7 +650,7 @@ post_process:
 		_enter_critical_mutex(&(pcmd->padapter->cmdpriv.sctx_mutex), NULL);
 		if (pcmd->sctx) {
 			if (0)
-				DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" pcmd->sctx\n",
+				DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" pcmd->sctx\n",
 					FUNC_ADPT_ARG(pcmd->padapter));
 			if (pcmd->res == H2C_SUCCESS)
 				rtw_sctx_done(&pcmd->sctx);
@@ -1765,7 +1765,7 @@ _func_enter_;
 	if(!enqueue)
 	{
 		while ((cam_id = rtw_camid_search(padapter, sta->hwaddr, -1, -1)) >= 0) {
-			DBG_871X_LEVEL(_drv_always_, "clear key for addr:"MAC_FMT", camid:%d\n", MAC_ARG(sta->hwaddr), cam_id);
+			DBG_871X_LEVEL(_drv_debug_, "clear key for addr:"MAC_FMT", camid:%d\n", MAC_ARG(sta->hwaddr), cam_id);
 			clear_cam_entry(padapter, cam_id);
 			rtw_camid_free(padapter, cam_id);
 		}

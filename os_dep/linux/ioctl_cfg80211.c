@@ -710,7 +710,7 @@ void rtw_cfg80211_ibss_indicate_connect(_adapter *padapter)
 		}
 
 		if (!rtw_cfg80211_check_bss(padapter))
-			DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" BSS not found !!\n", FUNC_ADPT_ARG(padapter));
+			DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" BSS not found !!\n", FUNC_ADPT_ARG(padapter));
 	}
 	//notify cfg80211 that device joined an IBSS
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 15, 0))
@@ -786,7 +786,7 @@ void rtw_cfg80211_indicate_connect(_adapter *padapter)
 
 check_bss:
 	if (!rtw_cfg80211_check_bss(padapter))
-		DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" BSS not found !!\n", FUNC_ADPT_ARG(padapter));
+		DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" BSS not found !!\n", FUNC_ADPT_ARG(padapter));
 
 	if (rtw_to_roam(padapter) > 0) {
 		#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39) || defined(COMPAT_KERNEL_RELEASE)
@@ -2097,7 +2097,7 @@ u32 rtw_cfg80211_wait_scan_req_empty(_adapter *adapter, u32 timeout_ms)
 	pass_ms = rtw_get_passing_time_ms(start);
 
 	if (empty == _FALSE && pass_ms > timeout_ms)
-		DBG_871X_LEVEL(_drv_always_, FUNC_ADPT_FMT" pass_ms:%u, timeout\n"
+		DBG_871X_LEVEL(_drv_debug_, FUNC_ADPT_FMT" pass_ms:%u, timeout\n"
 			, FUNC_ADPT_ARG(adapter), pass_ms);
 
 	return pass_ms;
